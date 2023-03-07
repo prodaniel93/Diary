@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 // useRef : DOM 요소를 선택할수 있는 기능
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ onCreate }) => {
   // 동작이 비슷한 state는 하나로 묶을수 있음.
   const authorInput = useRef();
   const contentInput = useRef();
@@ -29,12 +29,19 @@ const DiaryEditor = () => {
       return;
     }
     if (state.content.length < 5) {
-      alert('일기 본문은 최소 1글자 이상 입력해주세요');
+      alert('일기 본문은 최소 5글자 이상 입력해주세요');
       // focus하기
       contentInput.current.focus();
       return;
     }
+
+    onCreate(state.author, state.content, state.emotion);
     alert('저장 성공!');
+    setState({
+      author: '',
+      content: '',
+      emotion: 1,
+    });
   };
 
   return (
